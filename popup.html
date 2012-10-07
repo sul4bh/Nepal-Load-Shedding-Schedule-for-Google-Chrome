@@ -1,0 +1,70 @@
+<html>
+<head>
+    <script type="text/javascript " src="libs/jquery.js"></script>
+    <script type="text/javascript " src="libs/mustache.js"></script>
+    <script type="text/javascript " src="libs/moment.js"></script>
+
+    <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+
+    <script type="template" id="template">
+        <ul>{{#data}}
+            <li>
+                <div class='group' data='{{Group}}' id='grp{{Group}}'>group {{Group}}</div>
+                <div class='data-{{Group}} info hidden'>
+                    {{#Info}}
+                    {{#Status}}
+                    <div class='day-info'>
+                        <div class='day-header'>
+                            {{Day}}
+                        </div>
+                        <div class="day-content">
+                            {{#Time}}
+                            <div class="day-left">
+                                <span class="time start">{{Start}}</span> &nbsp;&nbsp; to &nbsp;&nbsp; <span class="time end">{{End}}</span>
+                            </div>
+                            {{/Time}}
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    {{/Status}}
+                    {{^Status}}
+                    <div class='day-info'>
+                        <div class='day-header dull'>
+                            {{Day}}
+                        </div>
+                        <div class="day-content dull">
+                            {{#Time}}
+                            <div class="day-left dull">
+                                <span class="time start dull">{{Start}}</span> &nbsp;&nbsp; to &nbsp;&nbsp; <span class="time end dull">{{End}}</span>
+                            </div>
+                            {{/Time}}
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    {{/Status}}
+                    {{/Info}}
+                </div>
+            </li>
+            {{/data}}
+        </ul>
+    </script>
+
+</head>
+<body>
+<div id='header'>
+    Load Shedding Schedule | <span id='effective'></span>
+</div>
+
+<div id="loading"></div>
+
+<div id="main">
+    <div class=sch>
+
+    </div>
+</div>
+<div class="clear"></div>
+
+</body>
+</html>
