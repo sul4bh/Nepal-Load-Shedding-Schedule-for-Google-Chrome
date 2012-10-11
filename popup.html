@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
 
 
+
     <script type="template" id="template">
         <ul>{{#data}}
             <li>
@@ -55,6 +56,12 @@
 <body>
 <div id='header'>
     Load Shedding Schedule | <span id='effective'></span>
+</div>
+
+<div id="searchBar">
+    <span class='searchText'>Select Location</span>
+    <select id='location'>
+    </select>
 </div>
 
 <div id="loading"></div>

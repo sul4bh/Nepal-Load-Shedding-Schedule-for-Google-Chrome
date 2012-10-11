@@ -1,7 +1,8 @@
-$(function(){
+$(function () {
+    checkGetLocation(searchLocation);
     checkForNewData();
     checkSetGroup();
-})
+});
 
 
 function checkSetGroup(){
@@ -166,18 +167,69 @@ function checkForNewData(){
                 var dataOf = moment(data.update, "YYYY/MM/DD");
                 loc_update = moment(loc_update, "YYYY/MM/DD");
                 if (loc_update.diff(dataOf) > 0){
-                    storage.set({'data':scrubData(resp)}, function(){});
+                    var scrub = scrubData(resp);
+                    storage.set({'data':scrub}, function(){});
                     storage.set({'update':loc_update}, function(){});
+                    renderSchedule(scrub);
                 }
-
-
-            })
+            });
         }
 
-    )
+    );
 }
 
 function scrubData(resp){
     resp = resp.replace(/Wednesda/g,'Wednesday');
     return resp;
+}
+
+
+/* Location Search Related */
+function searchLocation(data){
+    //generate data
+
+    var dom = $.parseXML(data);
+    var locData = [];
+
+    var locations = $(dom).find('LOCATION');
+    for(var i=0;i<locations.length;i++){
+        var locunitData = {};
+        locunitData['location'] = $(locations[i]).attr('NAME');
+        locunitData['group'] = $(locations[i]).attr('GROUP');
+        locunitData['substation'] = $(locations[i]).attr('SUBSTATION');
+        locData.push(locunitData);
+    }
+
+    locaData = locData.sort(function(el1,el2) { return el1.location == el2.location ? 0 : (el1.location < el2.location ? -1 : 1); } );
+
+
+    for(var i=0;i<locData.length;i++){
+        $('#location').append('<option value='+locData[i].group+'>'+locData[i].location+' || Sub-station:  '+locData[i].substation+'</option>')
+    }
+
+    $('#searchBar').show();
+    $('#location').bind('change',function(){
+        var group = $(this).val();
+        $('#grp'+group).trigger('click');
+    })
+
+}
+
+
+function checkGetLocation(callback){
+    var storage = chrome.storage.local;
+    storage.get('LOCdata', function(data){
+            (data.LOCdata)?callback(data.LOCdata):fetchLOCData(callback);
+    })
+}
+
+
+function fetchLOCData(callback){
+    $.get(
+        'http://dl.dropbox.com./u/60336235/NLS/NLS_Locations.html',
+        function(response){
+            chrome.storage.local.set({'LOCdata':response});
+            callback(response);
+        }
+    )
 }

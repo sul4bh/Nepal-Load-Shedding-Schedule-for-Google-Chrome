@@ -85,8 +85,8 @@ ul{
 }
 
 .day-header{
-    background-image: -webkit-linear-gradient(top, #f1f1f1, #f2f2f2);
-    color:#3079ED;
+    background-image: -webkit-linear-gradient(top,#4D90FE,#4787ED);
+    color:#fff;
     border-radius: 5px 5px 0 0;
     text-align: center;
     border: 1px #bbb solid;
@@ -95,7 +95,7 @@ ul{
 }
 
 .day-content{
-    background-image: -webkit-linear-gradient(top, #eee, #e7f1ff);
+    background:#FFF;
     border-bottom: 1px solid #CCC;
     border-right: 1px #bbb solid;
     border-left: 1px #bbb solid;
@@ -133,4 +133,19 @@ ul{
 
 #effective{
     font-size:12px;
+}
+
+
+#searchBar{
+    display: none;
+    border-bottom: 1px dotted #bbb;
+    margin-bottom: 10px;
+    padding-left: 4px;
+    padding-bottom: 10px;
+}
+
+
+#location{
+    border:1px solid #3875d7;
+    padding:3px 10px;
 }
