@@ -138,11 +138,19 @@ ul{
 
 #searchBar{
     display: none;
+    opacity:0.2;
     border-bottom: 1px dotted #bbb;
     margin-bottom: 10px;
     padding-left: 4px;
     padding-bottom: 10px;
+    -webkit-transition-property:opacity;
+    -webkit-transition-duration: 0.2s;
 }
+
+#searchBar:hover, #searchBar:active{
+    opacity: 1;
+}
+
 
 
 #location{
