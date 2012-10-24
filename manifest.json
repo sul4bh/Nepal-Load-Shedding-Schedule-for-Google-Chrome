@@ -13,7 +13,7 @@
 
     "browser_action": {
         "default_icon": "icons/icon16.png",
-        "default_title": "Download Video",
+        "default_title": "View Load Shedding Schedule",
         "default_popup": "popup.html"
     },
 
