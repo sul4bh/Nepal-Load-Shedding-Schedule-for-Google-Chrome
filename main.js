@@ -63,13 +63,16 @@ function renderScheduleInit(){
 
 function renderSchedule(data){
     var dom = $.parseXML(data);
-    var effDate = $(dom).find('RESULTS').attr('effdate');
-    var loc_update = $(dom).find('RESULTS').attr('LOC_UPDATE');
+    var effdateRaw = $(dom).find('RESULTS').attr('effdate');
+    effdateRaw = effdateRaw.split('/');
+    var effdate = new Nepdate();
+    effdate = effdate.bs2ad(effdateRaw);
+    effdate = effdate.join('/');
 
-    chrome.storage.local.set({'update':loc_update}, function(){});
 
-    $('#effective').html('Effective from: '+effDate);
-    var locUpdate = $(dom).find('RESULTS').attr('LOC_UPDATE');
+    chrome.storage.local.set({'update':effdate}, function(){});
+
+    $('#effective').html('Effective from: '+effdate);
     var nls = $(dom).find('NLS');
 
     var data = {},
@@ -161,9 +164,9 @@ function checkForNewData(){
         function(resp){
             var dom = $.parseXML(resp);
             var effdateRaw = $(dom).find('RESULTS').attr('effdate');
-            var effdateRaw = effdateRaw.split('/');
+            effdateRaw = effdateRaw.split('/');
             var effdate = new Nepdate();
-            var effdate = effdate.bs2ad(effdateRaw);
+            effdate = effdate.bs2ad(effdateRaw);
             effdate = effdate.join('/');
 
             var storage = chrome.storage.local;
@@ -172,9 +175,8 @@ function checkForNewData(){
                 effdate = moment(effdate, "YYYY/MM/DD");
                 if (effdate.diff(dataOf) > 0){
                     var scrub = scrubData(resp);
-                    storage.set({'data':scrub}, function(){});
-                    storage.set({'update':effdate}, function(){});
-                    renderSchedule(scrub);
+                    chrome.storage.local.set({'data':scrub});
+                    chrome.storage.local.set({'update':effdate});
                 }
             });
         }
@@ -223,7 +225,7 @@ function searchLocation(data){
 function checkGetLocation(callback){
     var storage = chrome.storage.local;
     storage.get('LOCdata', function(data){
-            (data.LOCdata)?callback(data.LOCdata):fetchLOCData(callback);
+        (data.LOCdata)?callback(data.LOCdata):fetchLOCData(callback);
     })
 }
 
