@@ -160,16 +160,20 @@ function checkForNewData(){
         'http://dl.dropbox.com/u/60336235/NLS/NLS.html',
         function(resp){
             var dom = $.parseXML(resp);
-            var loc_update = $(dom).find('RESULTS').attr('LOC_UPDATE');
+            var effdateRaw = $(dom).find('RESULTS').attr('effdate');
+            var effdateRaw = effdateRaw.split('/');
+            var effdate = new Nepdate();
+            var effdate = effdate.bs2ad(effdateRaw);
+            effdate = effdate.join('/');
 
             var storage = chrome.storage.local;
             storage.get('update', function(data){
                 var dataOf = moment(data.update, "YYYY/MM/DD");
-                loc_update = moment(loc_update, "YYYY/MM/DD");
-                if (loc_update.diff(dataOf) > 0){
+                effdate = moment(effdate, "YYYY/MM/DD");
+                if (effdate.diff(dataOf) > 0){
                     var scrub = scrubData(resp);
                     storage.set({'data':scrub}, function(){});
-                    storage.set({'update':loc_update}, function(){});
+                    storage.set({'update':effdate}, function(){});
                     renderSchedule(scrub);
                 }
             });
