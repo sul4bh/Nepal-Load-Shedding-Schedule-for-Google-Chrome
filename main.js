@@ -177,6 +177,7 @@ function checkForNewData(){
                     var scrub = scrubData(resp);
                     chrome.storage.local.set({'data':scrub});
                     chrome.storage.local.set({'update':effdate});
+                    renderSchedule(resp);
                 }
             });
         }
