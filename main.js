@@ -166,7 +166,6 @@ function checkForNewData(){
             var effdateRaw = $(dom).find('RESULTS').attr('effdate');
             effdateRaw = effdateRaw.split('-');
             var effdate = new Nepdate();
-            console.log(effdateRaw);
             effdate = effdate.bs2ad(effdateRaw);
             effdate = effdate.join('/');
 
