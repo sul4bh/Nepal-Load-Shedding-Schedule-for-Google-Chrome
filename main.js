@@ -64,7 +64,7 @@ function renderScheduleInit(){
 function renderSchedule(data){
     var dom = $.parseXML(data);
     var effdateRaw = $(dom).find('RESULTS').attr('effdate');
-    effdateRaw = effdateRaw.split('/');
+    effdateRaw = effdateRaw.split('-');
     var effdate = new Nepdate();
     effdate = effdate.bs2ad(effdateRaw);
     effdate = effdate.join('/');
@@ -164,8 +164,9 @@ function checkForNewData(){
         function(resp){
             var dom = $.parseXML(resp);
             var effdateRaw = $(dom).find('RESULTS').attr('effdate');
-            effdateRaw = effdateRaw.split('/');
+            effdateRaw = effdateRaw.split('-');
             var effdate = new Nepdate();
+            console.log(effdateRaw);
             effdate = effdate.bs2ad(effdateRaw);
             effdate = effdate.join('/');
 
