@@ -215,7 +215,7 @@ function searchLocation(data){
     }
 
     $('#searchBar').show();
-    $('#location').bind('change',function(){
+    $('#location').bind('click',function(){
         var group = $(this).val();
         $('#grp'+group).trigger('click');
     })
